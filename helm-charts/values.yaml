@@ -1,0 +1,17 @@
+
+
+# service_type should be NodePort, ClusterIP or LoadBalancer
+service:
+  type: ClusterIP
+  protocal: TCP
+
+replicas: 1
+
+
+image:
+  repository: "kfire312/exam-app"
+  tag: "latest"
+  policy: IfNotPresent
+
+target_port: 8000
+port: 8000

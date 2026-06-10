@@ -1,0 +1,16 @@
+kind: Service     
+apiVersion: v1     
+metadata:
+  name: {{ .Release.Name }}-service 
+  labels:
+    {{- include "eyal.labels" . | nindent 4}}
+spec:
+  selector:
+    {{- include "eyal.labels" . | nindent 4}}
+  type: {{.Values.service.type}}
+
+  ports:         
+  - name: http   
+    protocol: {{ .Values.service.protocol }}
+    port: {{ .Values.port }}
+    targetPort: {{ .Values.target_port }}  
