@@ -5,7 +5,7 @@ service:
   type: ClusterIP
   protocal: TCP
 
-replicas: 1
+replicas: 2
 
 
 image:
