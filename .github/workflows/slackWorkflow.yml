@@ -92,11 +92,6 @@ jobs:
     needs: docker-build-and-push
     
     runs-on: ubuntu-latest
-
-    outputs:
-      branch_name: ${{ steps.branch.outputs.branch_name }}
-      app_name: ${{ github.event.repository.name }}
-
     steps:
     - name: checkout
       uses: actions/checkout@v4
@@ -128,17 +123,12 @@ jobs:
        ref: application
        path: application
        persist-credentials: false
-    
-    - name: echo branch name and app name
-      run: |
-        echo ${{ needs.helm-template.outputs.branch_name }}
-        echo ${{ needs.helm-template.outputs.app_name }}
 
     - name: download artifact
       uses: actions/download-artifact@v4
       with:
         name: helm-template  
-        path: application/${{ needs.helm-template.outputs.app_name }}/${{ needs.helm-template.outputs.branch_name }}
+        path: application/app1/dev/
 
     - name: list files
       run: ls -Ra application/
