@@ -92,6 +92,10 @@ jobs:
     needs: docker-build-and-push
     
     runs-on: ubuntu-latest
+
+    outputs:
+      branch_name: ${{ steps.branch.outputs.branch_name }}
+
     steps:
     - name: checkout
       uses: actions/checkout@v4
@@ -108,6 +112,9 @@ jobs:
         name: helm-template
         path: "${{ github.event.repository.name }}.yaml"
 
+    - id: branch
+      run: echo "branch_name=${{github.ref_name}}" >> "$GITHUB_OUTPUT"
+
 
   pull-commit-push-into-argocd:
     needs: helm-template
@@ -122,13 +129,13 @@ jobs:
        persist-credentials: false
     
     - name: echo branch name
-      run: echo ${{ github.ref_name }}
+      run: echo ${{ needs.helm-template.outputs.branch_name }}
         
     - name: download artifact
       uses: actions/download-artifact@v4
       with:
         name: helm-template  
-        path: application/app1/${{ github.ref_name }}/
+        path: application/app1/${{ needs.helm-template.outputs.branch_name }}
 
     - name: list files
       run: ls -Ra application/
