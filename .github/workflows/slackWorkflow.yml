@@ -95,6 +95,7 @@ jobs:
 
     outputs:
       branch_name: ${{ steps.branch.outputs.branch_name }}
+      app_name: ${{ github.event.repository.name }}
 
     steps:
     - name: checkout
@@ -128,9 +129,11 @@ jobs:
        path: application
        persist-credentials: false
     
-    - name: echo branch name
-      run: echo ${{ needs.helm-template.outputs.branch_name }}
-        
+    - name: echo branch name and app name
+      run: |
+        echo ${{ needs.helm-template.outputs.branch_name }}
+        echo ${{ needs.helm-template.outputs.app_name }}
+
     - name: download artifact
       uses: actions/download-artifact@v4
       with:
