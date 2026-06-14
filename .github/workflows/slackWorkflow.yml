@@ -120,12 +120,15 @@ jobs:
        ref: application
        path: application
        persist-credentials: false
-
+    
+    - name: echo branch name
+      run: echo ${{ github.head_ref }}
+        
     - name: download artifact
       uses: actions/download-artifact@v4
       with:
         name: helm-template  
-        path: application/app1/dev/
+        path: application/app1/${{ github.head_ref }}/
 
     - name: list files
       run: ls -Ra application/
