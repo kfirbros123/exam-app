@@ -181,5 +181,5 @@ jobs:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         SLACK_MESSAGE: |
           "Workflow ${{ github.workflow }} has completed."
-          "Failed at Trivy scan step. Please check the logs for details."
+          "Failed at Trivy security scan step. Please check the logs for details."
         SLACK_COLOR: failure
